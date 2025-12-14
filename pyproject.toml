@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "project1-sitnikova-irina-255"
 version = "0.1.0"
-description = ""
+description = "Текстовая приключенческая игра-лабиринт с загадками и случайными событиями."
 authors = ["Irina"]
 
 packages = [

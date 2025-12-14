@@ -59,7 +59,7 @@ ROOMS = {
             'На стене висит меч, рядом — небольшая бронзовая шкатулка.'
         ),
         'exits': {'south': 'library'},
-        'items': ['sword', 'bronze_box', 'rusty_key'],
+        'items': ['sword', 'bronze_box'],
         'puzzle': None
     },
     'treasure_room': {

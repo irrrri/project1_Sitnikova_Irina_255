@@ -5,6 +5,10 @@ import math
 from labyrinth_game.constants import ROOMS
 from labyrinth_game.input_utils import get_input
 
+EVENT_PROBABILITY = 10
+EVENT_TYPES = 3
+TRAP_DEATH_THRESHOLD = 3
+
 
 def describe_current_room(game_state):
     current_room_name = game_state['current_room']
@@ -75,9 +79,6 @@ def solve_puzzle(game_state):
 
 
 def attempt_open_treasure(game_state):
-    """
-    Логика открытия treasure_chest в комнате treasure_room.
-    """
     current_room_name = game_state['current_room']
     room = ROOMS[current_room_name]
 
@@ -146,8 +147,8 @@ def trigger_trap(game_state):
         return
 
     # Если инвентарь пуст — риск смерти
-    danger = pseudo_random(game_state['steps_taken'], 10)
-    if danger < 3:
+    danger = pseudo_random(game_state['steps_taken'], EVENT_PROBABILITY)
+    if danger < TRAP_DEATH_THRESHOLD:
         print("Ловушка смертельна... Вы погибли.")
         game_state['game_over'] = True
     else:
@@ -156,11 +157,11 @@ def trigger_trap(game_state):
 
 def random_event(game_state):
     # Проверяем, произойдет ли событие
-    event_chance = pseudo_random(game_state['steps_taken'], 10)
+    event_chance = pseudo_random(game_state['steps_taken'], EVENT_PROBABILITY)
     if event_chance != 0:
         return
 
-    event_type = pseudo_random(game_state['steps_taken'], 3)
+    event_type = pseudo_random(game_state['steps_taken'], EVENT_TYPES)
     current_room = game_state['current_room']
     room = ROOMS[current_room]
     inventory = game_state['player_inventory']

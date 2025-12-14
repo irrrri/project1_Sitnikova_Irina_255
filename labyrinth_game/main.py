@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from labyrinth_game.constants import COMMANDS, ROOMS
+from labyrinth_game.constants import COMMANDS
 from labyrinth_game.input_utils import get_input
 from labyrinth_game.player_actions import (
     move_player,
@@ -56,11 +56,7 @@ def process_command(game_state, command):
                 print("Укажите предмет для использования. Пример: use torch")
 
         case 'solve':
-            # Проверяем, находимся ли в treasure_room с сундуком
-            if (
-                    game_state['current_room'] == 'treasure_room' and
-                    'treasure_chest' in ROOMS['treasure_room']['items']
-            ):
+            if game_state['current_room'] == 'treasure_room':
                 attempt_open_treasure(game_state)
             else:
                 solve_puzzle(game_state)
