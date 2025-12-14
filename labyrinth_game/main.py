@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from labyrinth_game.constants import ROOMS
+from labyrinth_game.constants import COMMANDS, ROOMS
 from labyrinth_game.input_utils import get_input
 from labyrinth_game.player_actions import (
     move_player,
@@ -11,6 +11,7 @@ from labyrinth_game.player_actions import (
 from labyrinth_game.utils import (
     attempt_open_treasure,
     describe_current_room,
+    show_help,
     solve_puzzle,
 )
 
@@ -24,6 +25,9 @@ def process_command(game_state, command):
     arg = parts[1] if len(parts) > 1 else None
 
     match cmd:
+        case 'north' | 'south' | 'east' | 'west':
+            move_player(game_state, cmd)
+
         case 'look':
             describe_current_room(game_state)
 
@@ -66,17 +70,7 @@ def process_command(game_state, command):
             game_state['game_over'] = True
 
         case 'help':
-            print(
-                "Доступные команды: "
-                "look, "
-                "inventory, "
-                "go <направление>, "
-                "take <предмет>, "
-                "use <предмет>, "
-                "solve, "
-                "quit, "
-                "help"
-            )
+            show_help(COMMANDS)
 
         case _:
             print("Неизвестная команда. Введите 'help' для справки.")

@@ -59,7 +59,7 @@ ROOMS = {
             'На стене висит меч, рядом — небольшая бронзовая шкатулка.'
         ),
         'exits': {'south': 'library'},
-        'items': ['sword', 'bronze_box'],
+        'items': ['sword', 'bronze_box', 'rusty_key'],
         'puzzle': None
     },
     'treasure_room': {
@@ -94,4 +94,17 @@ ROOMS = {
         'items': ['crystal', 'old_coin'],
         'puzzle': ('В кристалле виднеется число: "Сколько граней у куба?"', '6')
     }
+}
+
+
+COMMANDS = {
+    "look": "осмотреть текущую комнату",
+    "inventory": "показать инвентарь",
+    "go <direction>": "перейти в направлении (north/south/east/west)",
+    "north/south/east/west": "перемещение без команды go",
+    "take <item>": "поднять предмет",
+    "use <item>": "использовать предмет",
+    "solve": "решить загадку или открыть сундук",
+    "quit": "выйти из игры",
+    "help": "показать справку",
 }

@@ -1,7 +1,7 @@
 # labyrinth_game/player_actions.py
 
 from labyrinth_game.constants import ROOMS
-from labyrinth_game.utils import describe_current_room
+from labyrinth_game.utils import describe_current_room, random_event
 
 
 def show_inventory(game_state):
@@ -19,15 +19,25 @@ def move_player(game_state, direction):
     current_room = game_state['current_room']
     exits = ROOMS[current_room]['exits']
 
-    if direction in exits:
-        # Обновляем текущую комнату
-        game_state['current_room'] = exits[direction]
-        # Увеличиваем счетчик шагов
-        game_state['steps_taken'] += 1
-        # Описание новой комнаты
-        describe_current_room(game_state)
-    else:
+    if direction not in exits:
         print("Нельзя пойти в этом направлении.")
+        return
+
+    next_room = exits[direction]
+    inventory = game_state['player_inventory']
+
+    if next_room == 'treasure_room' and 'rusty_key' not in inventory:
+        print("Дверь заперта. Нужен ключ, чтобы пройти дальше.")
+        return
+
+    if next_room == 'treasure_room' and 'rusty_key' in inventory:
+        print("Вы используете найденный ключ, чтобы открыть путь в комнату сокровищ.")
+
+    game_state['current_room'] = next_room
+    game_state['steps_taken'] += 1
+
+    random_event(game_state)
+    describe_current_room(game_state)
 
 
 def take_item(game_state, item_name):
@@ -45,10 +55,6 @@ def take_item(game_state, item_name):
 
 
 def use_item(game_state, item_name):
-    """
-    Использует предмет из инвентаря игрока.
-    Выполняет уникальные действия для каждого предмета.
-    """
     inventory = game_state.get('player_inventory', [])
 
     if item_name not in inventory:
